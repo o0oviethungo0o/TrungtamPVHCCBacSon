@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reset hệ thống</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f8ff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .reset-container {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 30px 40px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .reset-container h1 {
+      font-size: 24px;
+      color: #d9534f;
+      margin-bottom: 20px;
+    }
+
+    .reset-container p {
+      margin-bottom: 25px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .btn-reset {
+      background-color: #d9534f;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-reset:hover {
+      background-color: #c9302c;
+    }
+
+    .note {
+      margin-top: 20px;
+      font-size: 13px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="reset-container">
+    <h1>🔄 Reset hệ thống</h1>
+    <p>Bạn có chắc chắn muốn xóa toàn bộ dữ liệu cấu hình đã lưu không?<br />
+    Sau khi reset, bạn sẽ cần thiết lập lại thông tin quầy và số thứ tự.</p>
+    <button class="btn-reset" onclick="resetData()">Xác nhận Reset</button>
+    <p class="note">Dữ liệu sẽ bị xóa khỏi bộ nhớ trình duyệt.</p>
+  </div>
+
+  <script>
+    function resetData() {
+      if (confirm("⚠️ Bạn chắc chắn muốn xóa toàn bộ dữ liệu?")) {
+        localStorage.clear();
+        alert("✅ Dữ liệu đã được xóa. Vui lòng thiết lập lại hệ thống.");
+        window.location.href = "index.html"; // quay về trang chính sau khi reset
+      }
+    }
+  </script>
+</body>
+</html>

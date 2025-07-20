@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang lấy số - Trung tâm PVHCC</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5faff;
+      text-align: center;
+    }
+
+    header img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      max-height: 200px;
+    }
+
+    h1 {
+      margin: 10px 0;
+      font-size: 26px;
+      color: #0078D7;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-top: 5px;
+      color: #333;
+    }
+
+    h3 {
+      font-size: 20px;
+      color: #006400;
+    }
+
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .field-button {
+      padding: 15px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      color: white;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .field-button:nth-child(1) { background-color: #007bff; }
+    .field-button:nth-child(2) { background-color: #28a745; }
+    .field-button:nth-child(3) { background-color: #ffc107; color: #000; }
+    .field-button:nth-child(4) { background-color: #17a2b8; }
+    .field-button:nth-child(5) { background-color: #dc3545; }
+    .field-button:nth-child(6) { background-color: #6f42c1; }
+
+    .field-button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    .banquyen {
+      position: fixed;
+      bottom: 8px;
+      right: 12px;
+      color: red;
+      font-size: 11px;
+      font-style: italic;
+      z-index: 9999;
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 2px 4px;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    .quaylai {
+      margin: 30px auto;
+      display: inline-block;
+      background-color: #ccc;
+      padding: 10px 20px;
+      border-radius: 6px;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .quaylai:hover {
+      background-color: #bbb;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="images/banner.jpg" alt="Banner">
+    <h1 id="centerTitle">TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG XÃ BẮC SƠN</h1>
+  </header>
+
+  <h2>Đăng ký số thứ tự</h2>
+  <h3>Chọn lĩnh vực để lấy số</h3>
+
+  <div class="button-container" id="fieldButtons"></div>
+
+  <!-- Nút quay lại -->
+  <div style="margin-top: 40px;">
+    <a href="trang-chu.html" class="quaylai">🔙 Quay lại</a>
+  </div>
+
+  <div class="banquyen">
+    Bản quyền: Dương Việt Hùng - Trung tâm Phục vụ hành chính công xã Bắc Sơn, tỉnh Lạng Sơn, ĐT: 0941 135 989.
+  </div>
+
+  <script>
+    const centerName = localStorage.getItem("centerName") || "TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG";
+    document.getElementById("centerTitle").textContent = centerName.toUpperCase();
+
+    const quays = JSON.parse(localStorage.getItem("quays") || "[]");
+    const fieldContainer = document.getElementById("fieldButtons");
+
+    quays.forEach((quay, index) => {
+      const btn = document.createElement("button");
+      btn.className = "field-button";
+      btn.textContent = quay.linhvuc;
+      btn.onclick = () => {
+        localStorage.setItem("selectedFieldIndex", index);
+        window.location.href = "lay-so-detail.html";
+      };
+      fieldContainer.appendChild(btn);
+    });
+  </script>
+
+
+<div style="position: fixed; top: 0; left: 0; right: 0; background: #007bff; color: white; padding: 10px 20px; z-index: 9999; display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif; flex-wrap: wrap;">
+  <div style="font-weight: bold;">🏛 Trung tâm Phục vụ hành chính công</div>
+  <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+    <a href="trang-chu.html" style="color: white; text-decoration: none;">🏠 Trang chủ</a>
+    <a href="lay-so.html" style="color: white; text-decoration: none;">📝 Đăng ký lấy số thứ tự</a>
+    <a href="tracuu.html" style="color: white; text-decoration: none;">🔎 Tra cứu Thủ tục hành chính</a>
+    <a href="danh-gia.html" style="color: white; text-decoration: none;">🌟 Đánh giá sự hài lòng</a>
+    <a href="index.html" style="color: white; text-decoration: none;">🔁 Đăng xuất</a>
+  </div>
+</div>
+<div style="height: 60px;"></div>
+
+
+
+</body>
+
+</html>

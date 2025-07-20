@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang đánh giá sự hài lòng</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #eef5f9;
+      text-align: center;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    header img {
+      width: 760px;
+      max-width: 100%;
+      height: auto;
+      margin-top: 10px;
+    }
+
+    h1 {
+      margin: 10px 0;
+      font-size: 24px;
+      color: darkred;
+      font-weight: bold;
+      padding: 0 20px;
+    }
+
+    .quay-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .quay {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      width: 240px;
+      text-align: center;
+    }
+
+    .cong-chuc-img {
+      width: auto;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 6px;
+      aspect-ratio: 2 / 3;
+    }
+
+    .link-danhgia {
+      margin-top: 10px;
+    }
+
+    .link-danhgia a {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .link-danhgia a::before {
+      content: "★ ";
+    }
+
+    .link-danhgia a:hover {
+      background-color: #1e7e34;
+      transform: scale(1.05);
+    }
+
+    .huongdan {
+      margin: 30px auto 20px;
+      max-width: 900px;
+      padding: 20px;
+      background-color: #fffbcc;
+      border-radius: 8px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .huongdan strong {
+      color: darkred;
+      font-size: 18px;
+      display: block;
+      margin-top: 10px;
+    }
+
+    .quaylai {
+      margin: 30px auto;
+      display: inline-block;
+      background-color: #ccc;
+      padding: 10px 20px;
+      border-radius: 6px;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .quaylai:hover {
+      background-color: #bbb;
+    }
+
+    .banquyen {
+      position: fixed;
+      bottom: 8px;
+      right: 12px;
+      color: red;
+      font-size: 11px;
+      font-style: italic;
+      z-index: 9999;
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 2px 4px;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="images/banner.jpg" alt="Banner">
+    <h1>KHẢO SÁT, ĐÁNH GIÁ SỰ HÀI LÒNG CỦA TỔ CHỨC, CÁ NHÂN ĐỐI VỚI TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG XÃ BẮC SƠN</h1>
+  </header>
+
+  <div class="quay-container" id="quayContainer"></div>
+
+  <div class="huongdan">
+    Tổ chức, cá nhân đến thực hiện thủ tục hành chính tại Trung tâm Phục vụ hành chính công xã Bắc Sơn vui lòng đánh giá mức độ hài lòng với chất lượng phục vụ, thái độ và tinh thần trách nhiệm của công chức tiếp nhận và trả kết quả.
+    <strong>Tổ chức, cá nhân có thể quét mã QR trên màn hình, mã QR niêm yết tại từng quầy hoặc nhấn nút Đánh giá phía dưới ảnh trên để đánh giá, góp ý</strong>
+  </div>
+
+  <!-- ✅ Nút quay lại -->
+  <div style="text-align: center;">
+    <a href="trang-chu.html" class="quaylai">🔙 Quay lại</a>
+  </div>
+
+  <!-- ✅ Tải footer tự động -->
+  <div id="footer"></div>
+  <script>
+    fetch("footer.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("footer").innerHTML = html;
+      });
+  </script>
+
+  <script>
+    const links = [
+      "https://docs.google.com/forms/d/1Xa9PFj241dno9G-Q_2Yf3spGponlx1vxNpygJ0gc73A/edit?pli=1",
+      "https://docs.google.com/forms/d/1T-4x5jMEHzl-u4kQMXThCGYcI9ncLUibYRvlHRMm544/edit?pli=1",
+      "https://docs.google.com/forms/d/1tox3gulCBh6zYme7inVBE2jsfvYxjwcZcpKx6GwT-r4/edit?pli=1",
+      "https://docs.google.com/forms/d/12SZh_bkzU2wLHYZu_0D7eayHdSUrd--NQiVIL152INE/edit?pli=1",
+      "https://docs.google.com/forms/d/1PxKfSIclBXIOFC9d4ANoyu4SVvBoaw9otEDz_0x7nCg/edit?pli=1",
+      "https://docs.google.com/forms/d/1lFalb3TQS2ryN5rA9zDEYGRto3VNFKDg0NwgmhbXr-k/edit?pli=1"
+    ];
+
+    const container = document.getElementById("quayContainer");
+    const quays = JSON.parse(localStorage.getItem("quays") || "[]");
+
+    quays.forEach((quay, index) => {
+      const div = document.createElement("div");
+      div.className = "quay";
+      div.innerHTML = `
+        <img class="cong-chuc-img" src="images/slide${index + 1}.png" alt="slide${index + 1}">
+        <div class="link-danhgia">
+          <a href="${links[index] || '#'}" target="_blank">Đánh giá</a>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  </script>
+
+  <!-- ✅ Thanh menu -->
+  <div style="position: fixed; top: 0; left: 0; right: 0; background: #007bff; color: white; padding: 10px 20px; z-index: 9999; display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif; flex-wrap: wrap;">
+    <div style="font-weight: bold;">🏛 Trung tâm Phục vụ hành chính công</div>
+    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+      <a href="trang-chu.html" style="color: white; text-decoration: none;">🏠 Trang chủ</a>
+      <a href="lay-so.html" style="color: white; text-decoration: none;">📝 Đăng ký lấy số thứ tự</a>
+      <a href="tracuu.html" style="color: white; text-decoration: none;">🔎 Tra cứu Thủ tục hành chính</a>
+      <a href="danh-gia.html" style="color: white; text-decoration: none;">🌟 Đánh giá sự hài lòng</a>
+      <a href="index.html" style="color: white; text-decoration: none;">🔁 Đăng xuất</a>
+    </div>
+  </div>
+  <div style="height: 60px;"></div>
+
+  <div class="banquyen">
+    Bản quyền: Dương Việt Hùng - Trung tâm Phục vụ hành chính công xã Bắc Sơn, tỉnh Lạng Sơn, ĐT: 0941 135 989.
+  </div>
+
+</body>
+</html>

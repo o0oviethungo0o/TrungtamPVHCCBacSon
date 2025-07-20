@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tạo tài khoản mã hoá</title>
+  <style>
+    body { font-family: Arial; padding: 40px; text-align: center; }
+    input { padding: 10px; margin: 10px; font-size: 16px; width: 300px; }
+    button { padding: 10px 20px; font-size: 16px; background: #0078D7; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    textarea { width: 80%; height: 150px; margin-top: 20px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h2>Tạo tài khoản mã hoá để sử dụng trong file auth.js</h2>
+  <input type="text" id="username" placeholder="Tên đăng nhập"><br>
+  <input type="password" id="password" placeholder="Mật khẩu"><br>
+  <button onclick="taoMaHoa()">Tạo mã hoá</button>
+
+  <textarea id="output" readonly></textarea>
+
+  <script>
+    function taoMaHoa() {
+      const user = document.getElementById("username").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      if (!user || !pass) {
+        alert("Vui lòng nhập đầy đủ tài khoản và mật khẩu.");
+        return;
+      }
+      const encodedUser = btoa(user);
+      const encodedPass = btoa(pass);
+      const code = `// auth.js (mã đã mã hoá)\nconst encodedUser = "${encodedUser}";\nconst encodedPass = "${encodedPass}";\n\nfunction dangNhap() {\n  const u = document.getElementById("username").value.trim();\n  const p = document.getElementById("password").value.trim();\n  if (btoa(u) === encodedUser && btoa(p) === encodedPass) {\n    localStorage.setItem(\"authenticated\", \"true\");\n    window.location.href = \"trang-chu.html\";\n  } else {\n    alert(\"Sai tài khoản hoặc mật khẩu!\");\n  }\n}`;
+      document.getElementById("output").value = code;
+    }
+  </script>
+</body>
+</html>

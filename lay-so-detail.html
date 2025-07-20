@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Phiếu lấy số</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f1f9f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .banner {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+    }
+
+    .ticket {
+      max-width: 450px;
+      margin: 30px auto;
+      border: 2px dashed #333;
+      padding: 30px 20px;
+      text-align: center;
+      background-color: #fff;
+      page-break-inside: avoid;
+    }
+
+    .big-number {
+      font-size: 80px;
+      color: #e60000;
+      margin: 20px 0;
+    }
+
+    .info {
+      font-size: 20px;
+      margin: 16px 0;
+    }
+
+    .timestamp {
+      font-size: 13px;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    .controls button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0078D7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .controls button:hover {
+      background-color: #005A9E;
+    }
+
+    .banquyen {
+      position: fixed;
+      bottom: 8px;
+      right: 12px;
+      color: red;
+      font-size: 11px;
+      font-style: italic;
+      z-index: 9999;
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 2px 4px;
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      #printArea, #printArea * {
+        visibility: visible;
+      }
+
+      #printArea {
+        position: absolute;
+        top: 0;
+        left: 0.5;
+        width: 8cm;
+        height: 12cm;
+        padding: 2mm;
+        box-sizing: border-box;
+      }
+
+      #printArea .big-number {
+        font-size: 40pt !important;
+      }
+
+      #printArea .info {
+        font-size: 14pt !important;
+      }
+
+      #printArea .timestamp {
+        font-size: 10pt !important;
+      }
+
+      @page {
+        margin: 0;
+      }
+
+      /* Ẩn thông tin header/footer in mặc định của trình duyệt */
+      body::before,
+      body::after {
+        display: none !important;
+        content: "";
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="images/banner.jpg" alt="Banner" class="banner">
+  
+    <div class="ticket" id="printArea">
+      <h1 id="centerTitle">TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG</h1>
+      <h2>Phiếu lấy số thứ tự</h2>
+      <div class="info"><strong>Quầy/Lĩnh vực:</strong> <span id="fieldName"></span></div>
+      <div class="big-number" id="soThuTu">#</div>
+      <div class="timestamp" id="thoiGianIn">Thời gian in: </div>
+    </div>
+
+    <div class="controls">
+      <button onclick="window.print()">🖨 In số thứ tự</button>
+      <button onclick="window.location.href='lay-so.html'">🔙 Quay lại</button>
+    </div>
+  </div>
+
+  <script>
+    const centerName = localStorage.getItem("centerName") || "TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG";
+    document.querySelectorAll("#centerTitle").forEach(el => el.textContent = centerName.toUpperCase());
+
+    const selectedFieldIndex = localStorage.getItem("selectedFieldIndex");
+    const quays = JSON.parse(localStorage.getItem("quays") || "[]");
+    const field = quays[selectedFieldIndex];
+
+    if (!field) {
+      alert("Không tìm thấy lĩnh vực. Quay về trang chủ.");
+      window.location.href = "trang-chu.html";
+    }
+
+    const now = new Date();
+    const todayKey = now.toISOString().split("T")[0];
+    const counterKey = `counter_${selectedFieldIndex}_${todayKey}`;
+    let number = parseInt(localStorage.getItem(counterKey) || "0") + 1;
+    localStorage.setItem(counterKey, number);
+
+    document.getElementById("fieldName").textContent = field.linhvuc;
+    document.getElementById("soThuTu").textContent = number.toString().padStart(3, '0');
+
+    // Cập nhật thời gian in phiếu
+    document.getElementById("thoiGianIn").textContent = "Thời gian in: " + now.toLocaleString('vi-VN');
+  </script>
+
+  <div class="banquyen">
+    Bản quyền: Dương Việt Hùng - Trung tâm Phục vụ hành chính công xã Bắc Sơn, tỉnh Lạng Sơn, ĐT: 0941 135 989.
+  </div>
+
+  <div style="position: fixed; top: 0; left: 0; right: 0; background: #007bff; color: white; padding: 10px 20px; z-index: 9999; display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif;">
+    <div style="font-weight: bold;">🏛 Trung tâm Hành chính công</div>
+    <div>
+      <a href="trang-chu.html" style="color: white; text-decoration: none;">🏠 Trang chủ</a>
+      <a href="lay-so.html" style="color: white; text-decoration: none;">📝 Đăng ký lấy số thứ tự</a>
+      <a href="tracuu.html" style="color: white; text-decoration: none;">🔎 Tra cứu Thủ tục hành chính</a>
+      <a href="danh-gia.html" style="color: white; text-decoration: none;">🌟 Đánh giá sự hài lòng</a>
+      <a href="index.html" style="color: white; text-decoration: none;">🔁 Đăng xuất</a>
+    </div>
+  </div>
+  <div style="height: 60px;"></div>
+</body>
+</html>

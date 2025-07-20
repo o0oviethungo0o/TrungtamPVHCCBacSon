@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Cấu hình Trung tâm</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <img src="images/banner.jpg" alt="Banner" class="banner">
+    <h1>TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG</h1>
+    <h2>Cấu hình hệ thống (thiết lập ban đầu)</h2>
+
+    <form id="configForm">
+      <label for="centerName">Tên Trung tâm:</label>
+      <input type="text" id="centerName" required>
+
+      <div id="quayContainer">
+        <h3>Danh sách quầy (tối thiểu 1)</h3>
+        <div class="quayItem">
+          <input type="text" placeholder="Tên lĩnh vực" class="linhvuc" required>
+          <input type="text" placeholder="Tên công chức" class="congchuc" required>
+        </div>
+      </div>
+      <button type="button" id="addQuay">➕ Thêm quầy</button>
+
+      <button type="submit" class="submit">💾 Lưu cấu hình</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("addQuay").addEventListener("click", () => {
+      const container = document.getElementById("quayContainer");
+      const item = document.createElement("div");
+      item.classList.add("quayItem");
+      item.innerHTML = `
+        <input type="text" placeholder="Tên lĩnh vực" class="linhvuc" required>
+        <input type="text" placeholder="Tên công chức" class="congchuc" required>
+      `;
+      container.appendChild(item);
+    });
+
+    document.getElementById("configForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const centerName = document.getElementById("centerName").value.trim();
+
+      const quays = Array.from(document.querySelectorAll(".quayItem")).map(div => ({
+        linhvuc: div.querySelector(".linhvuc").value.trim(),
+        congchuc: div.querySelector(".congchuc").value.trim()
+      }));
+
+      if (!centerName || quays.length === 0) {
+        alert("Vui lòng nhập đầy đủ thông tin.");
+        return;
+      }
+
+      localStorage.setItem("centerName", centerName);
+      localStorage.setItem("quays", JSON.stringify(quays));
+      localStorage.setItem("configured", "true");
+
+      alert("Cấu hình thành công!");
+      window.location.href = "trang-chu.html";
+    });
+  </script>
+</body>
+</html>

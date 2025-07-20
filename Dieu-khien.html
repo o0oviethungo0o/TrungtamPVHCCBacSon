@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang 07 - Điều khiển số</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #eef5f9;
+      text-align: center;
+    }
+
+    header img {
+      width: 760px;
+      max-width: 100%;
+      height: auto;
+      margin-top: 10px;
+    }
+
+    h1 {
+      margin: 10px 0;
+      font-size: 26px;
+      color: #003366;
+    }
+
+    .quay-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    .quay {
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      width: 240px;
+      text-align: center;
+    }
+
+    .quay h2 {
+      font-size: 18px;
+      margin: 10px 0 5px;
+      color: #003366;
+      white-space: pre-line;
+    }
+
+    .control-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .control-buttons button {
+      padding: 5px 10px;
+      font-size: 14px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .control-buttons button:hover {
+      background-color: #004a99;
+    }
+
+    .cong-chuc-img {
+      width: auto;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 6px;
+      aspect-ratio: 2 / 3;
+    }
+
+    .so-hien-tai {
+      margin-top: 8px;
+      font-size: 20px;
+      font-weight: bold;
+      color: red;
+    }
+
+    .so-hien-tai span {
+      display: block;
+      font-size: 30px;
+      margin-top: 4px;
+    }
+  </style>
+
+
+
+<style>
+.banquyen {
+  position: fixed;
+  bottom: 8px;
+  right: 12px;
+  color: red;
+  font-size: 11px;
+  font-style: italic;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 2px 4px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+</style>
+
+
+
+
+
+</head>
+
+<body>
+  <header>
+    <img src="images/banner.jpg" alt="Banner">
+    <h1>TRUNG TÂM PHỤC VỤ HÀNH CHÍNH CÔNG XÃ BẮC SƠN</h1>
+  </header>
+
+  <div class="quay-container" id="quayContainer"></div>
+
+  <script>
+    const quays = JSON.parse(localStorage.getItem("quays") || "[]");
+    const currentNumbers = JSON.parse(localStorage.getItem("currentNumbers") || "{}");
+    const quayContainer = document.getElementById("quayContainer");
+
+    function updateLocalAndUI(index, delta) {
+      const linhvuc = quays[index].linhvuc;
+      currentNumbers[linhvuc] = (currentNumbers[linhvuc] || 0) + delta;
+      if (currentNumbers[linhvuc] < 1) currentNumbers[linhvuc] = 1;
+
+      localStorage.setItem("currentNumbers", JSON.stringify(currentNumbers));
+
+      const span = document.getElementById(`so-hien-tai-${index}`);
+      const formatted = currentNumbers[linhvuc].toString().padStart(3, '0');
+      span.innerHTML = `Đang xử lý số:<span>${formatted}</span>`;
+
+      // Phát âm thanh (tạm thời giữ nguyên — sẽ xử lý nâng cao sau nếu cần)
+      const audio = new Audio(`sounds/quay${index + 1}-${formatted}.mp3`);
+      audio.play().catch(err => console.warn("Không phát được âm thanh", err));
+    }
+
+    quays.forEach((quay, index) => {
+      const current = currentNumbers[quay.linhvuc] || 0;
+      const formatted = current.toString().padStart(3, '0');
+      const anh = `images/Anh${index + 1}.jpg`;
+
+      const div = document.createElement("div");
+      div.className = "quay";
+      div.innerHTML = `
+        <h2>Quầy số ${index + 1}:
+${quay.linhvuc}</h2>
+        <div class="control-buttons">
+          <button onclick="updateLocalAndUI(${index}, -1)">← Lùi</button>
+          <button onclick="updateLocalAndUI(${index}, 1)">Tiến →</button>
+        </div>
+        <img class="cong-chuc-img" src="${anh}" alt="${quay.linhvuc}">
+        <div class="so-hien-tai" id="so-hien-tai-${index}">
+          Đang xử lý số:<span>${formatted}</span>
+        </div>
+      `;
+
+      quayContainer.appendChild(div);
+    });
+  </script>
+
+<div id="footer"></div>
+<script>
+  fetch("footer.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footer").innerHTML = html;
+    });
+</script>
+
+
+
+<div class="banquyen">
+  Bản quyền: Dương Việt Hùng - Trung tâm Phục vụ hành chính công xã Bắc Sơn, tỉnh Lạng Sơn, ĐT: 0941 135 989.
+</div>
+
+
+
+
+</body>
+<div style="position: fixed; top: 0; left: 0; right: 0; background: #007bff; color: white; padding: 10px 20px; z-index: 9999; display: flex; justify-content: space-between; align-items: center; font-family: Arial, sans-serif;">
+  <div style="font-weight: bold;">🏛 Trung tâm Hành chính công</div>
+  <div>
+    <a href="trang-chu.html" style="color: white; margin-right: 20px; text-decoration: none;">🏠 Trang chủ</a>
+    <a href="index.html" style="color: white; text-decoration: none;">🔁 Đăng xuất</a>
+  </div>
+</div>
+<div style="height: 60px;"></div>
+
+
+
+</html>
