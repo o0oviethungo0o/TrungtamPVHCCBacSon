@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Trang Chủ - Đăng Nhập</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+    #login-form, #main-content {
+      max-width: 500px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #0078D7;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #main-content {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="login-form">
+    <h2>Đăng nhập</h2>
+    <input type="text" id="username" placeholder="Tên đăng nhập" />
+    <input type="password" id="password" placeholder="Mật khẩu" />
+    <button onclick="dangNhap()">Đăng nhập</button>
+  </div>
+
+  <div id="main-content">
+    <!-- Đây là phần giao diện TRANG CHỦ bạn đã thiết kế -->
+    <h2>Chào mừng đến Trung tâm Phục vụ Hành chính công xã Bắc Sơn</h2>
+    <p>Bạn đã đăng nhập thành công!</p>
+    <!-- Toàn bộ giao diện trang chủ bạn chèn vào đây -->
+    <button onclick="dangXuat()">Đăng xuất</button>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    // Kiểm tra nếu đã đăng nhập
+    if (localStorage.getItem("authenticated") === "true") {
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("main-content").style.display = "block";
+    }
+
+    // Đăng xuất
+    function dangXuat() {
+      localStorage.removeItem("authenticated");
+      location.reload();
+    }
+  </script>
+</body>
+</html>
